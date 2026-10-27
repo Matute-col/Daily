@@ -14,7 +14,10 @@ export interface Task {
   /** Día al que pertenece la tarea, formato YYYY-MM-DD. */
   date: string
   status: TaskStatus
+  /** Primera vez que se inició. */
   startedAt?: string
+  /** Inicio del tramo actual en curso (solo si status === 'in_progress'). */
+  runningSince?: string
   finishedAt?: string
   /** Tiempo acumulado trabajado en ms (soporta pausar/reanudar). */
   durationMs: number
@@ -33,7 +36,7 @@ export interface NewTaskInput {
 }
 
 export type TaskPatch = Partial<
-  Pick<Task, 'title' | 'emoji' | 'date' | 'status' | 'notes' | 'reminder' | 'startedAt' | 'finishedAt' | 'durationMs'>
+  Pick<Task, 'title' | 'emoji' | 'date' | 'status' | 'notes' | 'reminder' | 'startedAt' | 'runningSince' | 'finishedAt' | 'durationMs'>
 >
 
 export interface Settings {

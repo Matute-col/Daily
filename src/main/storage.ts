@@ -115,6 +115,7 @@ export class TaskRepository {
     if ('notes' in p) task.notes = typeof p.notes === 'string' ? p.notes.slice(0, 2000) : undefined
     if ('reminder' in p) task.reminder = cleanReminder(p.reminder)
     if ('startedAt' in p) task.startedAt = cleanIso(p.startedAt)
+    if ('runningSince' in p) task.runningSince = cleanIso(p.runningSince)
     if ('finishedAt' in p) task.finishedAt = cleanIso(p.finishedAt)
     if ('durationMs' in p) task.durationMs = Math.max(0, Math.round(Number(p.durationMs) || 0))
     task.updatedAt = new Date().toISOString()
