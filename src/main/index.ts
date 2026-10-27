@@ -1,7 +1,11 @@
 import { join } from 'node:path'
 import { app, BrowserWindow, shell } from 'electron'
+import { registerIpc } from './ipc'
+import { TaskRepository } from './storage'
 
-function createWindow(): BrowserWindow {
+let mainWindow: BrowserWindow | null = null
+
+function createWindow(repo: TaskRepository): BrowserWindow {
   const win = new BrowserWindow({
     width: 420,
     height: 680,
@@ -10,6 +14,7 @@ function createWindow(): BrowserWindow {
     title: 'Daily',
     backgroundColor: '#0D0221',
     autoHideMenuBar: true,
+    alwaysOnTop: repo.getSettings().alwaysOnTop,
     show: false,
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
@@ -35,14 +40,30 @@ function createWindow(): BrowserWindow {
   return win
 }
 
-app.whenReady().then(() => {
-  app.setAppUserModelId('com.matutecol.daily')
-  createWindow()
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+// Una sola instancia: si se abre otra vez el icono, se enfoca la ventana existente.
+if (!app.requestSingleInstanceLock()) {
+  app.quit()
+} else {
+  app.on('second-instance', () => {
+    if (!mainWindow) return
+    if (mainWindow.isMinimized()) mainWindow.restore()
+    mainWindow.show()
+    mainWindow.focus()
   })
-})
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit()
-})
+  app.whenReady().then(() => {
+    app.setAppUserModelId('com.matutecol.daily')
+    const repo = new TaskRepository(join(app.getPath('userData'), 'daily-data.json'))
+    registerIpc(repo, () => mainWindow)
+    mainWindow = createWindow(repo)
+    mainWindow.on('closed', () => (mainWindow = null))
+
+    app.on('activate', () => {
+      if (BrowserWindow.getAllWindows().length === 0) mainWindow = createWindow(repo)
+    })
+  })
+
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit()
+  })
+}
