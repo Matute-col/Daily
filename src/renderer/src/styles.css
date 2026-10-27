@@ -26,7 +26,7 @@ body {
 /* --- Componentes base --- */
 @layer components {
   .glass {
-    background: color-mix(in srgb, var(--color-night) 78%, transparent);
+    background: color-mix(in srgb, var(--color-night) 58%, transparent);
     border: 1px solid color-mix(in srgb, var(--color-violet) 45%, transparent);
     backdrop-filter: blur(12px);
     box-shadow: 0 0 30px -10px var(--color-violet);
@@ -36,6 +36,10 @@ body {
   }
   .icon-btn {
     @apply grid h-8 w-8 shrink-0 place-items-center rounded-lg transition hover:bg-violet/30 focus-visible:outline-2 focus-visible:outline-cyan;
+  }
+  /* Botones secundarios que solo ocupan espacio al pasar el ratón o con foco de teclado */
+  .hover-btn {
+    @apply w-0 overflow-hidden opacity-0 group-hover:w-8 group-hover:opacity-100 group-focus-within:w-8 group-focus-within:opacity-100;
   }
   .btn-primary {
     @apply grid place-items-center rounded-lg bg-cyan font-semibold text-night transition hover:brightness-110 disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-ice;
@@ -69,5 +73,83 @@ body {
   *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* --- Fondo animado synthwave (solo CSS, bajo consumo) --- */
+.bg-scene {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: linear-gradient(180deg, var(--color-night) 0%, #1a0440 45%, color-mix(in srgb, var(--color-violet) 35%, var(--color-night)) 62%, var(--color-night) 100%);
+}
+.bg-sun {
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  width: 60vmin;
+  height: 60vmin;
+  transform: translate(-50%, -100%);
+  border-radius: 50%;
+  opacity: 0.35;
+  background: linear-gradient(180deg, var(--color-pink), var(--color-violet));
+  mask-image: repeating-linear-gradient(180deg, black 0 14px, transparent 14px 20px);
+  filter: drop-shadow(0 0 40px var(--color-pink));
+  animation: sun-pulse 6s ease-in-out infinite;
+}
+.bg-grid {
+  position: absolute;
+  left: -50%;
+  right: -50%;
+  top: 58%;
+  height: 80%;
+  transform-origin: top center;
+  transform: perspective(300px) rotateX(70deg);
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--color-cyan) 55%, transparent) 2px, transparent 2px),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-cyan) 55%, transparent) 2px, transparent 2px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(180deg, transparent, black 25%);
+  opacity: 0.45;
+  animation: grid-move 2.5s linear infinite;
+}
+.bg-stars {
+  position: absolute;
+  inset: 0 0 45% 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 10% 20%, var(--color-ice), transparent),
+    radial-gradient(1px 1px at 30% 60%, var(--color-cyan), transparent),
+    radial-gradient(1.5px 1.5px at 55% 15%, var(--color-ice), transparent),
+    radial-gradient(1px 1px at 75% 45%, var(--color-pink), transparent),
+    radial-gradient(1.5px 1.5px at 90% 25%, var(--color-ice), transparent),
+    radial-gradient(1px 1px at 45% 80%, var(--color-cyan), transparent);
+  background-size: 300px 300px;
+  animation: twinkle 4s ease-in-out infinite alternate, drift 60s linear infinite;
+}
+.bg-paused,
+.bg-paused * {
+  animation-play-state: paused !important;
+}
+@keyframes grid-move {
+  to {
+    background-position: 0 48px;
+  }
+}
+@keyframes sun-pulse {
+  50% {
+    opacity: 0.5;
+    filter: drop-shadow(0 0 60px var(--color-pink));
+  }
+}
+@keyframes twinkle {
+  to {
+    opacity: 0.4;
+  }
+}
+@keyframes drift {
+  to {
+    background-position: 300px 0;
   }
 }

@@ -13,18 +13,21 @@ interface Props {
 /** Diálogo accesible: Escape cierra, foco inicial dentro, clic fuera cierra. */
 export function Modal({ open, title, onClose, children }: Props) {
   const ref = useRef<HTMLDivElement>(null)
+  // Ref para que el efecto no se re-ejecute (y robe el foco) en cada render del padre.
+  const closeRef = useRef(onClose)
+  closeRef.current = onClose
 
   useEffect(() => {
     if (!open) return
     const prev = document.activeElement as HTMLElement | null
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && closeRef.current()
     window.addEventListener('keydown', onKey)
     requestAnimationFrame(() => ref.current?.querySelector<HTMLElement>('input,button,textarea,select')?.focus())
     return () => {
       window.removeEventListener('keydown', onKey)
       prev?.focus()
     }
-  }, [open, onClose])
+  }, [open])
 
   // Portal al body: evita que transforms de ancestros (animaciones) rompan el position: fixed.
   return createPortal(

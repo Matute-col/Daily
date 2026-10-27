@@ -97,14 +97,14 @@ export function TaskItem({ task, compact }: { task: Task; compact: boolean }) {
           </button>
         )}
         {done && (
-          <button className="icon-btn opacity-0 group-hover:opacity-100 focus:opacity-100" onClick={() => reopen(task.id)} aria-label={`Reabrir ${task.title}`} title="Reabrir">
+          <button className="icon-btn hover-btn" onClick={() => reopen(task.id)} aria-label={`Reabrir ${task.title}`} title="Reabrir">
             <UndoIcon />
           </button>
         )}
-        <button className="icon-btn opacity-0 group-hover:opacity-100 focus:opacity-100" onClick={() => setEditing(true)} aria-label={`Editar ${task.title}`} title="Editar">
+        <button className="icon-btn hover-btn" onClick={() => setEditing(true)} aria-label={`Editar ${task.title}`} title="Editar">
           <EditIcon />
         </button>
-        <button className="icon-btn opacity-0 hover:text-pink group-hover:opacity-100 focus:opacity-100" onClick={() => setConfirmDelete(true)} aria-label={`Eliminar ${task.title}`} title="Eliminar">
+        <button className="icon-btn hover-btn hover:text-pink" onClick={() => setConfirmDelete(true)} aria-label={`Eliminar ${task.title}`} title="Eliminar">
           <TrashIcon />
         </button>
       </div>
