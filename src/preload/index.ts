@@ -13,6 +13,7 @@ const api: DailyApi = {
   createTask: (input) => ipcRenderer.invoke(IPC.createTask, input),
   updateTask: (id, patch) => ipcRenderer.invoke(IPC.updateTask, id, patch),
   deleteTask: (id) => ipcRenderer.invoke(IPC.deleteTask, id),
+  copyText: (text) => ipcRenderer.invoke(IPC.copyText, text),
   getSettings: () => ipcRenderer.invoke(IPC.getSettings),
   setSettings: (patch) => ipcRenderer.invoke(IPC.setSettings, patch),
   onTasksChanged: (cb) => subscribe(IPC.tasksChanged, cb),

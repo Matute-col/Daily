@@ -66,6 +66,7 @@ export interface DailyApi {
   createTask(input: NewTaskInput): Promise<Task>
   updateTask(id: string, patch: TaskPatch): Promise<Task>
   deleteTask(id: string): Promise<void>
+  copyText(text: string): Promise<void>
   getSettings(): Promise<Settings>
   setSettings(patch: Partial<Settings>): Promise<Settings>
   /** Se dispara cuando el proceso principal modifica datos (p. ej. desde un recordatorio). */

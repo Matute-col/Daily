@@ -6,5 +6,6 @@ export const IPC = {
   getSettings: 'settings:get',
   setSettings: 'settings:set',
   tasksChanged: 'tasks:changed',
-  focusTask: 'tasks:focus'
+  focusTask: 'tasks:focus',
+  copyText: 'clipboard:write'
 } as const
