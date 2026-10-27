@@ -137,6 +137,8 @@ export class TaskRepository {
     if (typeof patch?.alwaysOnTop === 'boolean') s.alwaysOnTop = patch.alwaysOnTop
     if (typeof patch?.compact === 'boolean') s.compact = patch.compact
     if (typeof patch?.animatedBackground === 'boolean') s.animatedBackground = patch.animatedBackground
+    if (typeof patch?.closeToTray === 'boolean') s.closeToTray = patch.closeToTray
+    if (typeof patch?.openAtLogin === 'boolean') s.openAtLogin = patch.openAtLogin
     if (patch?.defaultReminderMin !== undefined) {
       const n = Math.round(Number(patch.defaultReminderMin))
       if (Number.isFinite(n)) s.defaultReminderMin = Math.min(Math.max(n, 1), 24 * 60)

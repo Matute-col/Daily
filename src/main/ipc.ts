@@ -1,9 +1,9 @@
-import { BrowserWindow, clipboard, ipcMain } from 'electron'
+import { clipboard, ipcMain } from 'electron'
 import { IPC } from '@shared/ipc'
 import type { NewTaskInput, Settings, TaskPatch } from '@shared/types'
 import type { TaskRepository } from './storage'
 
-export function registerIpc(repo: TaskRepository, getWindow: () => BrowserWindow | null): void {
+export function registerIpc(repo: TaskRepository, onSettings: (s: Settings) => void): void {
   ipcMain.handle(IPC.listTasks, () => repo.list())
   ipcMain.handle(IPC.createTask, (_e, input: NewTaskInput) => repo.create(input))
   ipcMain.handle(IPC.updateTask, (_e, id: string, patch: TaskPatch) => repo.update(String(id), patch))
@@ -12,7 +12,7 @@ export function registerIpc(repo: TaskRepository, getWindow: () => BrowserWindow
   ipcMain.handle(IPC.getSettings, () => repo.getSettings())
   ipcMain.handle(IPC.setSettings, (_e, patch: Partial<Settings>) => {
     const s = repo.setSettings(patch)
-    getWindow()?.setAlwaysOnTop(s.alwaysOnTop)
+    onSettings(s)
     return s
   })
 }

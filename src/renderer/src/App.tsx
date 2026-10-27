@@ -27,7 +27,17 @@ export default function App() {
 
   useEffect(() => {
     load()
-  }, [load])
+    // Cambios hechos desde el proceso principal (bandeja, recordatorios).
+    const offChanged = window.daily.onTasksChanged(() => load())
+    const offFocus = window.daily.onFocusTask((id) => {
+      setView('today')
+      useDaily.getState().focusTask(id)
+    })
+    return () => {
+      offChanged()
+      offFocus()
+    }
+  }, [load, setView])
 
   return (
     <>

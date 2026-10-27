@@ -45,13 +45,18 @@ export interface Settings {
   /** Intervalo por defecto (min) al activar un recordatorio nuevo. */
   defaultReminderMin: number
   animatedBackground: boolean
+  /** Al cerrar la ventana, sigue en la bandeja para que los recordatorios funcionen. */
+  closeToTray: boolean
+  openAtLogin: boolean
 }
 
 export const DEFAULT_SETTINGS: Settings = {
   alwaysOnTop: false,
   compact: false,
   defaultReminderMin: 30,
-  animatedBackground: true
+  animatedBackground: true,
+  closeToTray: true,
+  openAtLogin: false
 }
 
 export interface DbShape {

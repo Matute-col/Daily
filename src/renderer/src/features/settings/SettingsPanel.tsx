@@ -6,7 +6,9 @@ type BoolKey = { [K in keyof Settings]: Settings[K] extends boolean ? K : never 
 const TOGGLES: { key: BoolKey; label: string; hint: string }[] = [
   { key: 'compact', label: 'Modo compacto', hint: 'Filas más pequeñas para ocupar menos espacio' },
   { key: 'alwaysOnTop', label: 'Siempre visible', hint: 'La ventana queda encima de las demás' },
-  { key: 'animatedBackground', label: 'Fondo animado', hint: 'Desactívalo para ahorrar batería' }
+  { key: 'animatedBackground', label: 'Fondo animado', hint: 'Desactívalo para ahorrar batería' },
+  { key: 'closeToTray', label: 'Seguir en la bandeja al cerrar', hint: 'Necesario para recibir recordatorios con la ventana cerrada' },
+  { key: 'openAtLogin', label: 'Abrir al iniciar Windows', hint: 'Daily arranca minimizado en la bandeja' }
 ]
 
 export function SettingsPanel() {
