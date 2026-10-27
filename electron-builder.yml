@@ -1,0 +1,30 @@
+appId: com.matutecol.daily
+productName: Daily
+copyright: Copyright © 2026 Matute-col
+directories:
+  output: release/${version}
+  buildResources: resources
+files:
+  - out/**
+  - resources/**
+  - package.json
+# El icono se lee desde fuera del asar para que las notificaciones de Windows puedan usarlo.
+asarUnpack:
+  - resources/**
+win:
+  icon: resources/icon.png
+  target:
+    - target: nsis
+      arch: [x64]
+  artifactName: Daily-Setup-${version}.${ext}
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: always
+  createStartMenuShortcut: true
+  shortcutName: Daily
+  uninstallDisplayName: Daily
+  runAfterFinish: true
+  deleteAppDataOnUninstall: false
+npmRebuild: false

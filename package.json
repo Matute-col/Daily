@@ -1,7 +1,7 @@
 {
   "name": "daily",
   "productName": "Daily",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Daily: organiza tus tareas del día, prepárate para la daily y celebra tus avances.",
   "author": "Matute-col",
   "license": "MIT",
@@ -13,6 +13,7 @@
     "preview": "electron-vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
     "test": "vitest --run",
+    "icon": "electron scripts/make-icon.cjs",
     "dist": "npm run build && electron-builder --win"
   },
   "devDependencies": {
@@ -22,20 +23,20 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "6.1.2",
+    "canvas-confetti": "1.9.4",
     "electron": "45.0.0",
     "electron-builder": "26.18.0",
     "electron-vite": "6.0.0",
-    "tailwindcss": "4.3.3",
-    "typescript": "7.0.2",
-    "vite": "8.3.5",
-    "vitest": "5.0.5"
-  },
-  "dependencies": {
-    "canvas-confetti": "1.9.4",
-    "date-fns": "4.4.0",
     "framer-motion": "14.7.1",
     "react": "19.3.1",
     "react-dom": "19.3.1",
+    "tailwindcss": "4.3.3",
+    "typescript": "7.0.2",
+    "vite": "8.3.5",
+    "vitest": "5.0.5",
     "zustand": "5.0.16"
+  },
+  "dependencies": {
+    "date-fns": "4.4.0"
   }
 }
